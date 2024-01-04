@@ -1,0 +1,1420 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ARRAYTYPE
+    ASSIGNOP
+    BLOCKCOMMENT
+    COMMENT
+    DOT
+    FOR
+    IN
+    INT
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> functions
+Rule 2     functions -> FUN function_header body functions
+Rule 3     functions -> empty
+Rule 4     function_header -> ID ORBRACKET function_variables CRBRACKET COLON TYPE
+Rule 5     function_header -> ID ORBRACKET function_variables CRBRACKET
+Rule 6     function_variables -> ID COLON TYPE
+Rule 7     function_variables -> ID COLON TYPE COMA function_variables
+Rule 8     function_variables -> empty
+Rule 9     function_args -> run_function
+Rule 10    function_args -> value
+Rule 11    function_args -> ID
+Rule 12    function_args -> value COMA function_args
+Rule 13    function_args -> empty
+Rule 14    body -> OBRACE NEWLINE actual_body CBRACE
+Rule 15    actual_body -> return_line
+Rule 16    actual_body -> statement
+Rule 17    actual_body -> statement actual_body
+Rule 18    actual_body -> empty
+Rule 19    return_line -> RETURN expression
+Rule 20    return_line -> RETURN run_function
+Rule 21    return_line -> RETURN value NEWLINE
+Rule 22    return_line -> RETURN ID NEWLINE
+Rule 23    return_line -> empty
+Rule 24    statement -> expression
+Rule 25    statement -> var_assign
+Rule 26    statement -> while_loop
+Rule 27    statement -> run_function
+Rule 28    statement -> if_sentence
+Rule 29    expression -> ID ARITHMOP ID NEWLINE
+Rule 30    expression -> ID INCRDECR NEWLINE
+Rule 31    var_assign -> VAR ID COLON TYPE ASSIGN value
+Rule 32    var_assign -> var_assign NEWLINE
+Rule 33    run_function -> ID ORBRACKET function_args CRBRACKET
+Rule 34    run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE
+Rule 35    if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE
+Rule 36    if_sentence -> if_sentence else_sentence
+Rule 37    else_sentence -> ELSE body NEWLINE
+Rule 38    while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE
+Rule 39    bool_expression -> bool_expression and_or bool_expression
+Rule 40    bool_expression -> ORBRACKET bool_expression CRBRACKET
+Rule 41    bool_expression -> ID COMPOP ID
+Rule 42    bool_expression -> value COMPOP value
+Rule 43    bool_expression -> value COMPOP ID
+Rule 44    bool_expression -> ID COMPOP value
+Rule 45    bool_expression -> TRUE
+Rule 46    bool_expression -> FALSE
+Rule 47    and_or -> LOGICOP
+Rule 48    value -> FLOATNUMBER
+Rule 49    value -> NUMBER
+Rule 50    value -> SSTRING
+Rule 51    value -> TRUE
+Rule 52    value -> FALSE
+Rule 53    value -> empty
+Rule 54    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ARITHMOP             : 29
+ARRAYTYPE            : 
+ASSIGN               : 31
+ASSIGNOP             : 
+BLOCKCOMMENT         : 
+CBRACE               : 14
+COLON                : 4 6 7 31
+COMA                 : 7 12
+COMMENT              : 
+COMPOP               : 41 42 43 44
+CRBRACKET            : 4 5 33 34 35 38 40
+DOT                  : 
+ELSE                 : 37
+FALSE                : 46 52
+FLOATNUMBER          : 48
+FOR                  : 
+FUN                  : 2
+ID                   : 4 5 6 7 11 22 29 29 30 31 33 34 41 41 43 44
+IF                   : 35
+IN                   : 
+INCRDECR             : 30
+INT                  : 
+LOGICOP              : 47
+NEWLINE              : 14 21 22 29 30 32 34 35 37 38
+NUMBER               : 49
+OBRACE               : 14
+ORBRACKET            : 4 5 33 34 35 38 40
+RETURN               : 19 20 21 22
+SSTRING              : 50
+TRUE                 : 45 51
+TYPE                 : 4 6 7 31
+VAR                  : 31
+WHILE                : 38
+error                : 
+
+Nonterminals, with rules where they appear
+
+actual_body          : 14 17
+and_or               : 39
+body                 : 2 35 37 38
+bool_expression      : 35 38 39 39 40
+else_sentence        : 36
+empty                : 3 8 13 18 23 53
+expression           : 19 24
+function_args        : 12 33 34
+function_header      : 2
+function_variables   : 4 5 7
+functions            : 1 2
+if_sentence          : 28 36
+return_line          : 15
+run_function         : 9 20 27
+start                : 0
+statement            : 16 17
+value                : 10 12 21 31 42 42 43 44
+var_assign           : 25 32
+while_loop           : 26
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start
+    (1) start -> . functions
+    (2) functions -> . FUN function_header body functions
+    (3) functions -> . empty
+    (54) empty -> .
+
+    FUN             shift and go to state 3
+    $end            reduce using rule 54 (empty -> .)
+
+    start                          shift and go to state 1
+    functions                      shift and go to state 2
+    empty                          shift and go to state 4
+
+state 1
+
+    (0) S' -> start .
+
+
+
+state 2
+
+    (1) start -> functions .
+
+    $end            reduce using rule 1 (start -> functions .)
+
+
+state 3
+
+    (2) functions -> FUN . function_header body functions
+    (4) function_header -> . ID ORBRACKET function_variables CRBRACKET COLON TYPE
+    (5) function_header -> . ID ORBRACKET function_variables CRBRACKET
+
+    ID              shift and go to state 6
+
+    function_header                shift and go to state 5
+
+state 4
+
+    (3) functions -> empty .
+
+    $end            reduce using rule 3 (functions -> empty .)
+
+
+state 5
+
+    (2) functions -> FUN function_header . body functions
+    (14) body -> . OBRACE NEWLINE actual_body CBRACE
+
+    OBRACE          shift and go to state 8
+
+    body                           shift and go to state 7
+
+state 6
+
+    (4) function_header -> ID . ORBRACKET function_variables CRBRACKET COLON TYPE
+    (5) function_header -> ID . ORBRACKET function_variables CRBRACKET
+
+    ORBRACKET       shift and go to state 9
+
+
+state 7
+
+    (2) functions -> FUN function_header body . functions
+    (2) functions -> . FUN function_header body functions
+    (3) functions -> . empty
+    (54) empty -> .
+
+    FUN             shift and go to state 3
+    $end            reduce using rule 54 (empty -> .)
+
+    functions                      shift and go to state 10
+    empty                          shift and go to state 4
+
+state 8
+
+    (14) body -> OBRACE . NEWLINE actual_body CBRACE
+
+    NEWLINE         shift and go to state 11
+
+
+state 9
+
+    (4) function_header -> ID ORBRACKET . function_variables CRBRACKET COLON TYPE
+    (5) function_header -> ID ORBRACKET . function_variables CRBRACKET
+    (6) function_variables -> . ID COLON TYPE
+    (7) function_variables -> . ID COLON TYPE COMA function_variables
+    (8) function_variables -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 12
+    CRBRACKET       reduce using rule 54 (empty -> .)
+
+    function_variables             shift and go to state 13
+    empty                          shift and go to state 14
+
+state 10
+
+    (2) functions -> FUN function_header body functions .
+
+    $end            reduce using rule 2 (functions -> FUN function_header body functions .)
+
+
+state 11
+
+    (14) body -> OBRACE NEWLINE . actual_body CBRACE
+    (15) actual_body -> . return_line
+    (16) actual_body -> . statement
+    (17) actual_body -> . statement actual_body
+    (18) actual_body -> . empty
+    (19) return_line -> . RETURN expression
+    (20) return_line -> . RETURN run_function
+    (21) return_line -> . RETURN value NEWLINE
+    (22) return_line -> . RETURN ID NEWLINE
+    (23) return_line -> . empty
+    (24) statement -> . expression
+    (25) statement -> . var_assign
+    (26) statement -> . while_loop
+    (27) statement -> . run_function
+    (28) statement -> . if_sentence
+    (54) empty -> .
+    (29) expression -> . ID ARITHMOP ID NEWLINE
+    (30) expression -> . ID INCRDECR NEWLINE
+    (31) var_assign -> . VAR ID COLON TYPE ASSIGN value
+    (32) var_assign -> . var_assign NEWLINE
+    (38) while_loop -> . WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE
+    (33) run_function -> . ID ORBRACKET function_args CRBRACKET
+    (34) run_function -> . ID ORBRACKET function_args CRBRACKET NEWLINE
+    (35) if_sentence -> . IF ORBRACKET bool_expression CRBRACKET body NEWLINE
+    (36) if_sentence -> . if_sentence else_sentence
+
+    RETURN          shift and go to state 19
+    CBRACE          reduce using rule 54 (empty -> .)
+    ID              shift and go to state 22
+    VAR             shift and go to state 26
+    WHILE           shift and go to state 27
+    IF              shift and go to state 28
+
+    actual_body                    shift and go to state 15
+    return_line                    shift and go to state 16
+    statement                      shift and go to state 17
+    empty                          shift and go to state 18
+    expression                     shift and go to state 20
+    run_function                   shift and go to state 21
+    var_assign                     shift and go to state 23
+    while_loop                     shift and go to state 24
+    if_sentence                    shift and go to state 25
+
+state 12
+
+    (6) function_variables -> ID . COLON TYPE
+    (7) function_variables -> ID . COLON TYPE COMA function_variables
+
+    COLON           shift and go to state 29
+
+
+state 13
+
+    (4) function_header -> ID ORBRACKET function_variables . CRBRACKET COLON TYPE
+    (5) function_header -> ID ORBRACKET function_variables . CRBRACKET
+
+    CRBRACKET       shift and go to state 30
+
+
+state 14
+
+    (8) function_variables -> empty .
+
+    CRBRACKET       reduce using rule 8 (function_variables -> empty .)
+
+
+state 15
+
+    (14) body -> OBRACE NEWLINE actual_body . CBRACE
+
+    CBRACE          shift and go to state 31
+
+
+state 16
+
+    (15) actual_body -> return_line .
+
+    CBRACE          reduce using rule 15 (actual_body -> return_line .)
+
+
+state 17
+
+    (16) actual_body -> statement .
+    (17) actual_body -> statement . actual_body
+    (15) actual_body -> . return_line
+    (16) actual_body -> . statement
+    (17) actual_body -> . statement actual_body
+    (18) actual_body -> . empty
+    (19) return_line -> . RETURN expression
+    (20) return_line -> . RETURN run_function
+    (21) return_line -> . RETURN value NEWLINE
+    (22) return_line -> . RETURN ID NEWLINE
+    (23) return_line -> . empty
+    (24) statement -> . expression
+    (25) statement -> . var_assign
+    (26) statement -> . while_loop
+    (27) statement -> . run_function
+    (28) statement -> . if_sentence
+    (54) empty -> .
+    (29) expression -> . ID ARITHMOP ID NEWLINE
+    (30) expression -> . ID INCRDECR NEWLINE
+    (31) var_assign -> . VAR ID COLON TYPE ASSIGN value
+    (32) var_assign -> . var_assign NEWLINE
+    (38) while_loop -> . WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE
+    (33) run_function -> . ID ORBRACKET function_args CRBRACKET
+    (34) run_function -> . ID ORBRACKET function_args CRBRACKET NEWLINE
+    (35) if_sentence -> . IF ORBRACKET bool_expression CRBRACKET body NEWLINE
+    (36) if_sentence -> . if_sentence else_sentence
+
+  ! reduce/reduce conflict for CBRACE resolved using rule 16 (actual_body -> statement .)
+    CBRACE          reduce using rule 16 (actual_body -> statement .)
+    RETURN          shift and go to state 19
+    ID              shift and go to state 22
+    VAR             shift and go to state 26
+    WHILE           shift and go to state 27
+    IF              shift and go to state 28
+
+  ! CBRACE          [ reduce using rule 54 (empty -> .) ]
+
+    statement                      shift and go to state 17
+    actual_body                    shift and go to state 32
+    return_line                    shift and go to state 16
+    empty                          shift and go to state 18
+    expression                     shift and go to state 20
+    run_function                   shift and go to state 21
+    var_assign                     shift and go to state 23
+    while_loop                     shift and go to state 24
+    if_sentence                    shift and go to state 25
+
+state 18
+
+    (18) actual_body -> empty .
+    (23) return_line -> empty .
+
+  ! reduce/reduce conflict for CBRACE resolved using rule 18 (actual_body -> empty .)
+    CBRACE          reduce using rule 18 (actual_body -> empty .)
+
+  ! CBRACE          [ reduce using rule 23 (return_line -> empty .) ]
+
+
+state 19
+
+    (19) return_line -> RETURN . expression
+    (20) return_line -> RETURN . run_function
+    (21) return_line -> RETURN . value NEWLINE
+    (22) return_line -> RETURN . ID NEWLINE
+    (29) expression -> . ID ARITHMOP ID NEWLINE
+    (30) expression -> . ID INCRDECR NEWLINE
+    (33) run_function -> . ID ORBRACKET function_args CRBRACKET
+    (34) run_function -> . ID ORBRACKET function_args CRBRACKET NEWLINE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 36
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    TRUE            shift and go to state 40
+    FALSE           shift and go to state 41
+    NEWLINE         reduce using rule 54 (empty -> .)
+
+    expression                     shift and go to state 33
+    run_function                   shift and go to state 34
+    value                          shift and go to state 35
+    empty                          shift and go to state 42
+
+state 20
+
+    (24) statement -> expression .
+
+    RETURN          reduce using rule 24 (statement -> expression .)
+    ID              reduce using rule 24 (statement -> expression .)
+    VAR             reduce using rule 24 (statement -> expression .)
+    WHILE           reduce using rule 24 (statement -> expression .)
+    IF              reduce using rule 24 (statement -> expression .)
+    CBRACE          reduce using rule 24 (statement -> expression .)
+
+
+state 21
+
+    (27) statement -> run_function .
+
+    RETURN          reduce using rule 27 (statement -> run_function .)
+    ID              reduce using rule 27 (statement -> run_function .)
+    VAR             reduce using rule 27 (statement -> run_function .)
+    WHILE           reduce using rule 27 (statement -> run_function .)
+    IF              reduce using rule 27 (statement -> run_function .)
+    CBRACE          reduce using rule 27 (statement -> run_function .)
+
+
+state 22
+
+    (29) expression -> ID . ARITHMOP ID NEWLINE
+    (30) expression -> ID . INCRDECR NEWLINE
+    (33) run_function -> ID . ORBRACKET function_args CRBRACKET
+    (34) run_function -> ID . ORBRACKET function_args CRBRACKET NEWLINE
+
+    ARITHMOP        shift and go to state 43
+    INCRDECR        shift and go to state 44
+    ORBRACKET       shift and go to state 45
+
+
+state 23
+
+    (25) statement -> var_assign .
+    (32) var_assign -> var_assign . NEWLINE
+
+    RETURN          reduce using rule 25 (statement -> var_assign .)
+    ID              reduce using rule 25 (statement -> var_assign .)
+    VAR             reduce using rule 25 (statement -> var_assign .)
+    WHILE           reduce using rule 25 (statement -> var_assign .)
+    IF              reduce using rule 25 (statement -> var_assign .)
+    CBRACE          reduce using rule 25 (statement -> var_assign .)
+    NEWLINE         shift and go to state 46
+
+
+state 24
+
+    (26) statement -> while_loop .
+
+    RETURN          reduce using rule 26 (statement -> while_loop .)
+    ID              reduce using rule 26 (statement -> while_loop .)
+    VAR             reduce using rule 26 (statement -> while_loop .)
+    WHILE           reduce using rule 26 (statement -> while_loop .)
+    IF              reduce using rule 26 (statement -> while_loop .)
+    CBRACE          reduce using rule 26 (statement -> while_loop .)
+
+
+state 25
+
+    (28) statement -> if_sentence .
+    (36) if_sentence -> if_sentence . else_sentence
+    (37) else_sentence -> . ELSE body NEWLINE
+
+    RETURN          reduce using rule 28 (statement -> if_sentence .)
+    ID              reduce using rule 28 (statement -> if_sentence .)
+    VAR             reduce using rule 28 (statement -> if_sentence .)
+    WHILE           reduce using rule 28 (statement -> if_sentence .)
+    IF              reduce using rule 28 (statement -> if_sentence .)
+    CBRACE          reduce using rule 28 (statement -> if_sentence .)
+    ELSE            shift and go to state 48
+
+    else_sentence                  shift and go to state 47
+
+state 26
+
+    (31) var_assign -> VAR . ID COLON TYPE ASSIGN value
+
+    ID              shift and go to state 49
+
+
+state 27
+
+    (38) while_loop -> WHILE . ORBRACKET bool_expression CRBRACKET body NEWLINE
+
+    ORBRACKET       shift and go to state 50
+
+
+state 28
+
+    (35) if_sentence -> IF . ORBRACKET bool_expression CRBRACKET body NEWLINE
+
+    ORBRACKET       shift and go to state 51
+
+
+state 29
+
+    (6) function_variables -> ID COLON . TYPE
+    (7) function_variables -> ID COLON . TYPE COMA function_variables
+
+    TYPE            shift and go to state 52
+
+
+state 30
+
+    (4) function_header -> ID ORBRACKET function_variables CRBRACKET . COLON TYPE
+    (5) function_header -> ID ORBRACKET function_variables CRBRACKET .
+
+    COLON           shift and go to state 53
+    OBRACE          reduce using rule 5 (function_header -> ID ORBRACKET function_variables CRBRACKET .)
+
+
+state 31
+
+    (14) body -> OBRACE NEWLINE actual_body CBRACE .
+
+    FUN             reduce using rule 14 (body -> OBRACE NEWLINE actual_body CBRACE .)
+    $end            reduce using rule 14 (body -> OBRACE NEWLINE actual_body CBRACE .)
+    NEWLINE         reduce using rule 14 (body -> OBRACE NEWLINE actual_body CBRACE .)
+
+
+state 32
+
+    (17) actual_body -> statement actual_body .
+
+    CBRACE          reduce using rule 17 (actual_body -> statement actual_body .)
+
+
+state 33
+
+    (19) return_line -> RETURN expression .
+
+    CBRACE          reduce using rule 19 (return_line -> RETURN expression .)
+
+
+state 34
+
+    (20) return_line -> RETURN run_function .
+
+    CBRACE          reduce using rule 20 (return_line -> RETURN run_function .)
+
+
+state 35
+
+    (21) return_line -> RETURN value . NEWLINE
+
+    NEWLINE         shift and go to state 54
+
+
+state 36
+
+    (22) return_line -> RETURN ID . NEWLINE
+    (29) expression -> ID . ARITHMOP ID NEWLINE
+    (30) expression -> ID . INCRDECR NEWLINE
+    (33) run_function -> ID . ORBRACKET function_args CRBRACKET
+    (34) run_function -> ID . ORBRACKET function_args CRBRACKET NEWLINE
+
+    NEWLINE         shift and go to state 55
+    ARITHMOP        shift and go to state 43
+    INCRDECR        shift and go to state 44
+    ORBRACKET       shift and go to state 45
+
+
+state 37
+
+    (48) value -> FLOATNUMBER .
+
+    NEWLINE         reduce using rule 48 (value -> FLOATNUMBER .)
+    COMA            reduce using rule 48 (value -> FLOATNUMBER .)
+    CRBRACKET       reduce using rule 48 (value -> FLOATNUMBER .)
+    COMPOP          reduce using rule 48 (value -> FLOATNUMBER .)
+    LOGICOP         reduce using rule 48 (value -> FLOATNUMBER .)
+    RETURN          reduce using rule 48 (value -> FLOATNUMBER .)
+    ID              reduce using rule 48 (value -> FLOATNUMBER .)
+    VAR             reduce using rule 48 (value -> FLOATNUMBER .)
+    WHILE           reduce using rule 48 (value -> FLOATNUMBER .)
+    IF              reduce using rule 48 (value -> FLOATNUMBER .)
+    CBRACE          reduce using rule 48 (value -> FLOATNUMBER .)
+
+
+state 38
+
+    (49) value -> NUMBER .
+
+    NEWLINE         reduce using rule 49 (value -> NUMBER .)
+    COMA            reduce using rule 49 (value -> NUMBER .)
+    CRBRACKET       reduce using rule 49 (value -> NUMBER .)
+    COMPOP          reduce using rule 49 (value -> NUMBER .)
+    LOGICOP         reduce using rule 49 (value -> NUMBER .)
+    RETURN          reduce using rule 49 (value -> NUMBER .)
+    ID              reduce using rule 49 (value -> NUMBER .)
+    VAR             reduce using rule 49 (value -> NUMBER .)
+    WHILE           reduce using rule 49 (value -> NUMBER .)
+    IF              reduce using rule 49 (value -> NUMBER .)
+    CBRACE          reduce using rule 49 (value -> NUMBER .)
+
+
+state 39
+
+    (50) value -> SSTRING .
+
+    NEWLINE         reduce using rule 50 (value -> SSTRING .)
+    COMA            reduce using rule 50 (value -> SSTRING .)
+    CRBRACKET       reduce using rule 50 (value -> SSTRING .)
+    COMPOP          reduce using rule 50 (value -> SSTRING .)
+    LOGICOP         reduce using rule 50 (value -> SSTRING .)
+    RETURN          reduce using rule 50 (value -> SSTRING .)
+    ID              reduce using rule 50 (value -> SSTRING .)
+    VAR             reduce using rule 50 (value -> SSTRING .)
+    WHILE           reduce using rule 50 (value -> SSTRING .)
+    IF              reduce using rule 50 (value -> SSTRING .)
+    CBRACE          reduce using rule 50 (value -> SSTRING .)
+
+
+state 40
+
+    (51) value -> TRUE .
+
+    NEWLINE         reduce using rule 51 (value -> TRUE .)
+    COMA            reduce using rule 51 (value -> TRUE .)
+    CRBRACKET       reduce using rule 51 (value -> TRUE .)
+    LOGICOP         reduce using rule 51 (value -> TRUE .)
+    RETURN          reduce using rule 51 (value -> TRUE .)
+    ID              reduce using rule 51 (value -> TRUE .)
+    VAR             reduce using rule 51 (value -> TRUE .)
+    WHILE           reduce using rule 51 (value -> TRUE .)
+    IF              reduce using rule 51 (value -> TRUE .)
+    CBRACE          reduce using rule 51 (value -> TRUE .)
+
+
+state 41
+
+    (52) value -> FALSE .
+
+    NEWLINE         reduce using rule 52 (value -> FALSE .)
+    COMA            reduce using rule 52 (value -> FALSE .)
+    CRBRACKET       reduce using rule 52 (value -> FALSE .)
+    LOGICOP         reduce using rule 52 (value -> FALSE .)
+    RETURN          reduce using rule 52 (value -> FALSE .)
+    ID              reduce using rule 52 (value -> FALSE .)
+    VAR             reduce using rule 52 (value -> FALSE .)
+    WHILE           reduce using rule 52 (value -> FALSE .)
+    IF              reduce using rule 52 (value -> FALSE .)
+    CBRACE          reduce using rule 52 (value -> FALSE .)
+
+
+state 42
+
+    (53) value -> empty .
+
+    NEWLINE         reduce using rule 53 (value -> empty .)
+    COMPOP          reduce using rule 53 (value -> empty .)
+    CRBRACKET       reduce using rule 53 (value -> empty .)
+    LOGICOP         reduce using rule 53 (value -> empty .)
+    RETURN          reduce using rule 53 (value -> empty .)
+    ID              reduce using rule 53 (value -> empty .)
+    VAR             reduce using rule 53 (value -> empty .)
+    WHILE           reduce using rule 53 (value -> empty .)
+    IF              reduce using rule 53 (value -> empty .)
+    CBRACE          reduce using rule 53 (value -> empty .)
+
+
+state 43
+
+    (29) expression -> ID ARITHMOP . ID NEWLINE
+
+    ID              shift and go to state 56
+
+
+state 44
+
+    (30) expression -> ID INCRDECR . NEWLINE
+
+    NEWLINE         shift and go to state 57
+
+
+state 45
+
+    (33) run_function -> ID ORBRACKET . function_args CRBRACKET
+    (34) run_function -> ID ORBRACKET . function_args CRBRACKET NEWLINE
+    (9) function_args -> . run_function
+    (10) function_args -> . value
+    (11) function_args -> . ID
+    (12) function_args -> . value COMA function_args
+    (13) function_args -> . empty
+    (33) run_function -> . ID ORBRACKET function_args CRBRACKET
+    (34) run_function -> . ID ORBRACKET function_args CRBRACKET NEWLINE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 58
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    TRUE            shift and go to state 40
+    FALSE           shift and go to state 41
+    CRBRACKET       reduce using rule 54 (empty -> .)
+    COMA            reduce using rule 54 (empty -> .)
+
+    function_args                  shift and go to state 59
+    run_function                   shift and go to state 60
+    value                          shift and go to state 61
+    empty                          shift and go to state 62
+
+state 46
+
+    (32) var_assign -> var_assign NEWLINE .
+
+    NEWLINE         reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+    RETURN          reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+    ID              reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+    VAR             reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+    WHILE           reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+    IF              reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+    CBRACE          reduce using rule 32 (var_assign -> var_assign NEWLINE .)
+
+
+state 47
+
+    (36) if_sentence -> if_sentence else_sentence .
+
+    ELSE            reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+    RETURN          reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+    ID              reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+    VAR             reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+    WHILE           reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+    IF              reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+    CBRACE          reduce using rule 36 (if_sentence -> if_sentence else_sentence .)
+
+
+state 48
+
+    (37) else_sentence -> ELSE . body NEWLINE
+    (14) body -> . OBRACE NEWLINE actual_body CBRACE
+
+    OBRACE          shift and go to state 8
+
+    body                           shift and go to state 63
+
+state 49
+
+    (31) var_assign -> VAR ID . COLON TYPE ASSIGN value
+
+    COLON           shift and go to state 64
+
+
+state 50
+
+    (38) while_loop -> WHILE ORBRACKET . bool_expression CRBRACKET body NEWLINE
+    (39) bool_expression -> . bool_expression and_or bool_expression
+    (40) bool_expression -> . ORBRACKET bool_expression CRBRACKET
+    (41) bool_expression -> . ID COMPOP ID
+    (42) bool_expression -> . value COMPOP value
+    (43) bool_expression -> . value COMPOP ID
+    (44) bool_expression -> . ID COMPOP value
+    (45) bool_expression -> . TRUE
+    (46) bool_expression -> . FALSE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ORBRACKET       shift and go to state 65
+    ID              shift and go to state 67
+    TRUE            shift and go to state 69
+    FALSE           shift and go to state 70
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    COMPOP          reduce using rule 54 (empty -> .)
+
+    bool_expression                shift and go to state 66
+    value                          shift and go to state 68
+    empty                          shift and go to state 42
+
+state 51
+
+    (35) if_sentence -> IF ORBRACKET . bool_expression CRBRACKET body NEWLINE
+    (39) bool_expression -> . bool_expression and_or bool_expression
+    (40) bool_expression -> . ORBRACKET bool_expression CRBRACKET
+    (41) bool_expression -> . ID COMPOP ID
+    (42) bool_expression -> . value COMPOP value
+    (43) bool_expression -> . value COMPOP ID
+    (44) bool_expression -> . ID COMPOP value
+    (45) bool_expression -> . TRUE
+    (46) bool_expression -> . FALSE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ORBRACKET       shift and go to state 65
+    ID              shift and go to state 67
+    TRUE            shift and go to state 69
+    FALSE           shift and go to state 70
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    COMPOP          reduce using rule 54 (empty -> .)
+
+    bool_expression                shift and go to state 71
+    value                          shift and go to state 68
+    empty                          shift and go to state 42
+
+state 52
+
+    (6) function_variables -> ID COLON TYPE .
+    (7) function_variables -> ID COLON TYPE . COMA function_variables
+
+    CRBRACKET       reduce using rule 6 (function_variables -> ID COLON TYPE .)
+    COMA            shift and go to state 72
+
+
+state 53
+
+    (4) function_header -> ID ORBRACKET function_variables CRBRACKET COLON . TYPE
+
+    TYPE            shift and go to state 73
+
+
+state 54
+
+    (21) return_line -> RETURN value NEWLINE .
+
+    CBRACE          reduce using rule 21 (return_line -> RETURN value NEWLINE .)
+
+
+state 55
+
+    (22) return_line -> RETURN ID NEWLINE .
+
+    CBRACE          reduce using rule 22 (return_line -> RETURN ID NEWLINE .)
+
+
+state 56
+
+    (29) expression -> ID ARITHMOP ID . NEWLINE
+
+    NEWLINE         shift and go to state 74
+
+
+state 57
+
+    (30) expression -> ID INCRDECR NEWLINE .
+
+    RETURN          reduce using rule 30 (expression -> ID INCRDECR NEWLINE .)
+    ID              reduce using rule 30 (expression -> ID INCRDECR NEWLINE .)
+    VAR             reduce using rule 30 (expression -> ID INCRDECR NEWLINE .)
+    WHILE           reduce using rule 30 (expression -> ID INCRDECR NEWLINE .)
+    IF              reduce using rule 30 (expression -> ID INCRDECR NEWLINE .)
+    CBRACE          reduce using rule 30 (expression -> ID INCRDECR NEWLINE .)
+
+
+state 58
+
+    (11) function_args -> ID .
+    (33) run_function -> ID . ORBRACKET function_args CRBRACKET
+    (34) run_function -> ID . ORBRACKET function_args CRBRACKET NEWLINE
+
+    CRBRACKET       reduce using rule 11 (function_args -> ID .)
+    ORBRACKET       shift and go to state 45
+
+
+state 59
+
+    (33) run_function -> ID ORBRACKET function_args . CRBRACKET
+    (34) run_function -> ID ORBRACKET function_args . CRBRACKET NEWLINE
+
+    CRBRACKET       shift and go to state 75
+
+
+state 60
+
+    (9) function_args -> run_function .
+
+    CRBRACKET       reduce using rule 9 (function_args -> run_function .)
+
+
+state 61
+
+    (10) function_args -> value .
+    (12) function_args -> value . COMA function_args
+
+    CRBRACKET       reduce using rule 10 (function_args -> value .)
+    COMA            shift and go to state 76
+
+
+state 62
+
+    (13) function_args -> empty .
+    (53) value -> empty .
+
+  ! reduce/reduce conflict for CRBRACKET resolved using rule 13 (function_args -> empty .)
+    CRBRACKET       reduce using rule 13 (function_args -> empty .)
+    COMA            reduce using rule 53 (value -> empty .)
+
+  ! CRBRACKET       [ reduce using rule 53 (value -> empty .) ]
+
+
+state 63
+
+    (37) else_sentence -> ELSE body . NEWLINE
+
+    NEWLINE         shift and go to state 77
+
+
+state 64
+
+    (31) var_assign -> VAR ID COLON . TYPE ASSIGN value
+
+    TYPE            shift and go to state 78
+
+
+state 65
+
+    (40) bool_expression -> ORBRACKET . bool_expression CRBRACKET
+    (39) bool_expression -> . bool_expression and_or bool_expression
+    (40) bool_expression -> . ORBRACKET bool_expression CRBRACKET
+    (41) bool_expression -> . ID COMPOP ID
+    (42) bool_expression -> . value COMPOP value
+    (43) bool_expression -> . value COMPOP ID
+    (44) bool_expression -> . ID COMPOP value
+    (45) bool_expression -> . TRUE
+    (46) bool_expression -> . FALSE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ORBRACKET       shift and go to state 65
+    ID              shift and go to state 67
+    TRUE            shift and go to state 69
+    FALSE           shift and go to state 70
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    COMPOP          reduce using rule 54 (empty -> .)
+
+    bool_expression                shift and go to state 79
+    value                          shift and go to state 68
+    empty                          shift and go to state 42
+
+state 66
+
+    (38) while_loop -> WHILE ORBRACKET bool_expression . CRBRACKET body NEWLINE
+    (39) bool_expression -> bool_expression . and_or bool_expression
+    (47) and_or -> . LOGICOP
+
+    CRBRACKET       shift and go to state 80
+    LOGICOP         shift and go to state 82
+
+    and_or                         shift and go to state 81
+
+state 67
+
+    (41) bool_expression -> ID . COMPOP ID
+    (44) bool_expression -> ID . COMPOP value
+
+    COMPOP          shift and go to state 83
+
+
+state 68
+
+    (42) bool_expression -> value . COMPOP value
+    (43) bool_expression -> value . COMPOP ID
+
+    COMPOP          shift and go to state 84
+
+
+state 69
+
+    (45) bool_expression -> TRUE .
+    (51) value -> TRUE .
+
+    CRBRACKET       reduce using rule 45 (bool_expression -> TRUE .)
+    LOGICOP         reduce using rule 45 (bool_expression -> TRUE .)
+    COMPOP          reduce using rule 51 (value -> TRUE .)
+
+
+state 70
+
+    (46) bool_expression -> FALSE .
+    (52) value -> FALSE .
+
+    CRBRACKET       reduce using rule 46 (bool_expression -> FALSE .)
+    LOGICOP         reduce using rule 46 (bool_expression -> FALSE .)
+    COMPOP          reduce using rule 52 (value -> FALSE .)
+
+
+state 71
+
+    (35) if_sentence -> IF ORBRACKET bool_expression . CRBRACKET body NEWLINE
+    (39) bool_expression -> bool_expression . and_or bool_expression
+    (47) and_or -> . LOGICOP
+
+    CRBRACKET       shift and go to state 85
+    LOGICOP         shift and go to state 82
+
+    and_or                         shift and go to state 81
+
+state 72
+
+    (7) function_variables -> ID COLON TYPE COMA . function_variables
+    (6) function_variables -> . ID COLON TYPE
+    (7) function_variables -> . ID COLON TYPE COMA function_variables
+    (8) function_variables -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 12
+    CRBRACKET       reduce using rule 54 (empty -> .)
+
+    function_variables             shift and go to state 86
+    empty                          shift and go to state 14
+
+state 73
+
+    (4) function_header -> ID ORBRACKET function_variables CRBRACKET COLON TYPE .
+
+    OBRACE          reduce using rule 4 (function_header -> ID ORBRACKET function_variables CRBRACKET COLON TYPE .)
+
+
+state 74
+
+    (29) expression -> ID ARITHMOP ID NEWLINE .
+
+    RETURN          reduce using rule 29 (expression -> ID ARITHMOP ID NEWLINE .)
+    ID              reduce using rule 29 (expression -> ID ARITHMOP ID NEWLINE .)
+    VAR             reduce using rule 29 (expression -> ID ARITHMOP ID NEWLINE .)
+    WHILE           reduce using rule 29 (expression -> ID ARITHMOP ID NEWLINE .)
+    IF              reduce using rule 29 (expression -> ID ARITHMOP ID NEWLINE .)
+    CBRACE          reduce using rule 29 (expression -> ID ARITHMOP ID NEWLINE .)
+
+
+state 75
+
+    (33) run_function -> ID ORBRACKET function_args CRBRACKET .
+    (34) run_function -> ID ORBRACKET function_args CRBRACKET . NEWLINE
+
+    RETURN          reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    ID              reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    VAR             reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    WHILE           reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    IF              reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    CBRACE          reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    CRBRACKET       reduce using rule 33 (run_function -> ID ORBRACKET function_args CRBRACKET .)
+    NEWLINE         shift and go to state 87
+
+
+state 76
+
+    (12) function_args -> value COMA . function_args
+    (9) function_args -> . run_function
+    (10) function_args -> . value
+    (11) function_args -> . ID
+    (12) function_args -> . value COMA function_args
+    (13) function_args -> . empty
+    (33) run_function -> . ID ORBRACKET function_args CRBRACKET
+    (34) run_function -> . ID ORBRACKET function_args CRBRACKET NEWLINE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 58
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    TRUE            shift and go to state 40
+    FALSE           shift and go to state 41
+    CRBRACKET       reduce using rule 54 (empty -> .)
+    COMA            reduce using rule 54 (empty -> .)
+
+    value                          shift and go to state 61
+    function_args                  shift and go to state 88
+    run_function                   shift and go to state 60
+    empty                          shift and go to state 62
+
+state 77
+
+    (37) else_sentence -> ELSE body NEWLINE .
+
+    ELSE            reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+    RETURN          reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+    ID              reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+    VAR             reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+    WHILE           reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+    IF              reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+    CBRACE          reduce using rule 37 (else_sentence -> ELSE body NEWLINE .)
+
+
+state 78
+
+    (31) var_assign -> VAR ID COLON TYPE . ASSIGN value
+
+    ASSIGN          shift and go to state 89
+
+
+state 79
+
+    (40) bool_expression -> ORBRACKET bool_expression . CRBRACKET
+    (39) bool_expression -> bool_expression . and_or bool_expression
+    (47) and_or -> . LOGICOP
+
+    CRBRACKET       shift and go to state 90
+    LOGICOP         shift and go to state 82
+
+    and_or                         shift and go to state 81
+
+state 80
+
+    (38) while_loop -> WHILE ORBRACKET bool_expression CRBRACKET . body NEWLINE
+    (14) body -> . OBRACE NEWLINE actual_body CBRACE
+
+    OBRACE          shift and go to state 8
+
+    body                           shift and go to state 91
+
+state 81
+
+    (39) bool_expression -> bool_expression and_or . bool_expression
+    (39) bool_expression -> . bool_expression and_or bool_expression
+    (40) bool_expression -> . ORBRACKET bool_expression CRBRACKET
+    (41) bool_expression -> . ID COMPOP ID
+    (42) bool_expression -> . value COMPOP value
+    (43) bool_expression -> . value COMPOP ID
+    (44) bool_expression -> . ID COMPOP value
+    (45) bool_expression -> . TRUE
+    (46) bool_expression -> . FALSE
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ORBRACKET       shift and go to state 65
+    ID              shift and go to state 67
+    TRUE            shift and go to state 69
+    FALSE           shift and go to state 70
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    COMPOP          reduce using rule 54 (empty -> .)
+
+    bool_expression                shift and go to state 92
+    value                          shift and go to state 68
+    empty                          shift and go to state 42
+
+state 82
+
+    (47) and_or -> LOGICOP .
+
+    ORBRACKET       reduce using rule 47 (and_or -> LOGICOP .)
+    ID              reduce using rule 47 (and_or -> LOGICOP .)
+    TRUE            reduce using rule 47 (and_or -> LOGICOP .)
+    FALSE           reduce using rule 47 (and_or -> LOGICOP .)
+    FLOATNUMBER     reduce using rule 47 (and_or -> LOGICOP .)
+    NUMBER          reduce using rule 47 (and_or -> LOGICOP .)
+    SSTRING         reduce using rule 47 (and_or -> LOGICOP .)
+    COMPOP          reduce using rule 47 (and_or -> LOGICOP .)
+
+
+state 83
+
+    (41) bool_expression -> ID COMPOP . ID
+    (44) bool_expression -> ID COMPOP . value
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 93
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    TRUE            shift and go to state 40
+    FALSE           shift and go to state 41
+    CRBRACKET       reduce using rule 54 (empty -> .)
+    LOGICOP         reduce using rule 54 (empty -> .)
+
+    value                          shift and go to state 94
+    empty                          shift and go to state 42
+
+state 84
+
+    (42) bool_expression -> value COMPOP . value
+    (43) bool_expression -> value COMPOP . ID
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    ID              shift and go to state 96
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    TRUE            shift and go to state 40
+    FALSE           shift and go to state 41
+    CRBRACKET       reduce using rule 54 (empty -> .)
+    LOGICOP         reduce using rule 54 (empty -> .)
+
+    value                          shift and go to state 95
+    empty                          shift and go to state 42
+
+state 85
+
+    (35) if_sentence -> IF ORBRACKET bool_expression CRBRACKET . body NEWLINE
+    (14) body -> . OBRACE NEWLINE actual_body CBRACE
+
+    OBRACE          shift and go to state 8
+
+    body                           shift and go to state 97
+
+state 86
+
+    (7) function_variables -> ID COLON TYPE COMA function_variables .
+
+    CRBRACKET       reduce using rule 7 (function_variables -> ID COLON TYPE COMA function_variables .)
+
+
+state 87
+
+    (34) run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .
+
+    RETURN          reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+    ID              reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+    VAR             reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+    WHILE           reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+    IF              reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+    CBRACE          reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+    CRBRACKET       reduce using rule 34 (run_function -> ID ORBRACKET function_args CRBRACKET NEWLINE .)
+
+
+state 88
+
+    (12) function_args -> value COMA function_args .
+
+    CRBRACKET       reduce using rule 12 (function_args -> value COMA function_args .)
+
+
+state 89
+
+    (31) var_assign -> VAR ID COLON TYPE ASSIGN . value
+    (48) value -> . FLOATNUMBER
+    (49) value -> . NUMBER
+    (50) value -> . SSTRING
+    (51) value -> . TRUE
+    (52) value -> . FALSE
+    (53) value -> . empty
+    (54) empty -> .
+
+    FLOATNUMBER     shift and go to state 37
+    NUMBER          shift and go to state 38
+    SSTRING         shift and go to state 39
+    TRUE            shift and go to state 40
+    FALSE           shift and go to state 41
+    NEWLINE         reduce using rule 54 (empty -> .)
+    RETURN          reduce using rule 54 (empty -> .)
+    ID              reduce using rule 54 (empty -> .)
+    VAR             reduce using rule 54 (empty -> .)
+    WHILE           reduce using rule 54 (empty -> .)
+    IF              reduce using rule 54 (empty -> .)
+    CBRACE          reduce using rule 54 (empty -> .)
+
+    value                          shift and go to state 98
+    empty                          shift and go to state 42
+
+state 90
+
+    (40) bool_expression -> ORBRACKET bool_expression CRBRACKET .
+
+    CRBRACKET       reduce using rule 40 (bool_expression -> ORBRACKET bool_expression CRBRACKET .)
+    LOGICOP         reduce using rule 40 (bool_expression -> ORBRACKET bool_expression CRBRACKET .)
+
+
+state 91
+
+    (38) while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body . NEWLINE
+
+    NEWLINE         shift and go to state 99
+
+
+state 92
+
+    (39) bool_expression -> bool_expression and_or bool_expression .
+    (39) bool_expression -> bool_expression . and_or bool_expression
+    (47) and_or -> . LOGICOP
+
+  ! shift/reduce conflict for LOGICOP resolved as shift
+    CRBRACKET       reduce using rule 39 (bool_expression -> bool_expression and_or bool_expression .)
+    LOGICOP         shift and go to state 82
+
+  ! LOGICOP         [ reduce using rule 39 (bool_expression -> bool_expression and_or bool_expression .) ]
+
+    and_or                         shift and go to state 81
+
+state 93
+
+    (41) bool_expression -> ID COMPOP ID .
+
+    CRBRACKET       reduce using rule 41 (bool_expression -> ID COMPOP ID .)
+    LOGICOP         reduce using rule 41 (bool_expression -> ID COMPOP ID .)
+
+
+state 94
+
+    (44) bool_expression -> ID COMPOP value .
+
+    CRBRACKET       reduce using rule 44 (bool_expression -> ID COMPOP value .)
+    LOGICOP         reduce using rule 44 (bool_expression -> ID COMPOP value .)
+
+
+state 95
+
+    (42) bool_expression -> value COMPOP value .
+
+    CRBRACKET       reduce using rule 42 (bool_expression -> value COMPOP value .)
+    LOGICOP         reduce using rule 42 (bool_expression -> value COMPOP value .)
+
+
+state 96
+
+    (43) bool_expression -> value COMPOP ID .
+
+    CRBRACKET       reduce using rule 43 (bool_expression -> value COMPOP ID .)
+    LOGICOP         reduce using rule 43 (bool_expression -> value COMPOP ID .)
+
+
+state 97
+
+    (35) if_sentence -> IF ORBRACKET bool_expression CRBRACKET body . NEWLINE
+
+    NEWLINE         shift and go to state 100
+
+
+state 98
+
+    (31) var_assign -> VAR ID COLON TYPE ASSIGN value .
+
+    NEWLINE         reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+    RETURN          reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+    ID              reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+    VAR             reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+    WHILE           reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+    IF              reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+    CBRACE          reduce using rule 31 (var_assign -> VAR ID COLON TYPE ASSIGN value .)
+
+
+state 99
+
+    (38) while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .
+
+    RETURN          reduce using rule 38 (while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    ID              reduce using rule 38 (while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    VAR             reduce using rule 38 (while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    WHILE           reduce using rule 38 (while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    IF              reduce using rule 38 (while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    CBRACE          reduce using rule 38 (while_loop -> WHILE ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+
+
+state 100
+
+    (35) if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .
+
+    ELSE            reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    RETURN          reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    ID              reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    VAR             reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    WHILE           reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    IF              reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+    CBRACE          reduce using rule 35 (if_sentence -> IF ORBRACKET bool_expression CRBRACKET body NEWLINE .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LOGICOP in state 92 resolved as shift
+WARNING: reduce/reduce conflict in state 17 resolved using rule (actual_body -> statement)
+WARNING: rejected rule (empty -> <empty>) in state 17
+WARNING: reduce/reduce conflict in state 18 resolved using rule (actual_body -> empty)
+WARNING: rejected rule (return_line -> empty) in state 18
+WARNING: reduce/reduce conflict in state 62 resolved using rule (function_args -> empty)
+WARNING: rejected rule (value -> empty) in state 62
+WARNING: Rule (return_line -> empty) is never reduced
