@@ -1,0 +1,39 @@
+
+tokens = ('ID', 'NEWLINE', 'COMMENT', 'BLOCKCOMMENT', 'INT', 'NUMBER', 'FLOATNUMBER', 'SSTRING',
+          'DOT', 'COLON', 'COMA', 'TRUE', 'FUN', 'FALSE', 'FOR', 'WHILE',
+          'IF', 'ELSE', 'TYPE', 'ARRAYTYPE', 'VAR', 'RETURN', 'IN',
+          'ASSIGNOP', 'ASSIGN', 'ARITHMOP', 'LOGICOP', 'COMPOP', 'INCRDECR', 'ORBRACKET',
+          'CRBRACKET', 'OBRACE', 'CBRACE',
+          )
+
+t_NEWLINE = r'\n'
+t_COMMENT = r'//.*'
+t_BLOCKCOMMENT = r'/\*(.|\n)*?\*/'
+t_NUMBER = r'\d+'
+t_FLOATNUMBER = r'\d+\.\d+'
+t_SSTRING = r"'([^'\\]|\\.)*'"
+t_DOT = r'\.'
+t_COLON = r':'
+t_COMA = r','
+t_TRUE = r'true'
+t_FUN = r'fun'
+t_FALSE = r'false'
+t_FOR = r'for'
+t_WHILE = r'while'
+t_IF = r'if'
+t_ELSE = r'else'
+t_TYPE = r'Int|String|Float|Double'
+t_ARRAYTYPE = r'Array\<(' + '|'.join(['Int', 'String', 'Float', 'Double']) + r')\>'
+t_VAR = r'var'
+t_RETURN = r'return'
+t_IN = r'in'
+t_ASSIGNOP = r'[-+*/%]='
+t_ASSIGN = r'='
+t_ARITHMOP = r'[-+*/%]'
+t_LOGICOP = r'&&|\|\|'
+t_COMPOP = r'==|!=|<=|>=|<|>'
+t_INCRDECR = r'\+\+|\-\-'
+t_ORBRACKET = r'\('
+t_CRBRACKET = r'\)'
+t_OBRACE = r'{'
+t_CBRACE = r'}'
