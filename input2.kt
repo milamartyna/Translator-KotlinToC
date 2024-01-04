@@ -1,14 +1,14 @@
 fun complex_add(a: Int): Int {
     var c: Int = 5
     var d: Int = 10
-    while ((a <= b) && (c > d)) {
+    while ((a <= 15) && (c > d)) {
         c--
         a++
     }
     return a + d
 }
 
-fun main(argCount: Int, args: String): Int {
+fun run(argCount: Int, args: String): Int {
     var a: Int = 8
     var b: Int = 9
     while (a <= b) {
@@ -19,6 +19,12 @@ fun main(argCount: Int, args: String): Int {
         return 1
     }
      else{
-        return add(a)
+        return complex_add(a)
     }
 }
+
+fun main(argCount: Int, args: String): Int {
+    run(2, 'stringArg')
+    return 0
+}
+

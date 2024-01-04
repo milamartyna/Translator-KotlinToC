@@ -1,3 +1,3 @@
-fun do(argCount: Int, args: String) {
+fun main(argCount: Int) {
     print('Hello, World!')
 }

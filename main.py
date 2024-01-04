@@ -1,8 +1,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-output_file = "inputTranslated.c"
-input_kotlin = "input.kt"
+output_file = "inputTranslated2.c"
+input_kotlin = "input2.kt"
 
 
 reserved = {
@@ -98,7 +98,7 @@ def p_function_header(p):
     if len(p) == 7:
         tmp = p[6].lower()
         if tmp == 'string':
-            tmp = 'char[] '
+            tmp = 'char* '
         p[0] = tmp + " " + p[1] + " (" + p[3] + ")"
     else:
         p[0] = "void " + p[1] + " (" + p[3] + ")"
@@ -113,7 +113,7 @@ def p_function_variables(p):
     else:
         tmp = p[3].lower()
         if tmp == 'string':
-            tmp = 'char[] '
+            tmp = 'char* '
         if len(p) == 4:
             p[0] = tmp + " " + p[1]
         else:
@@ -190,7 +190,7 @@ def p_var_assign(p):
     else:
         tmp = p[4].lower()
         if tmp == 'string':
-            tmp = 'char[] '
+            tmp = 'char* '
         p[0] = tmp + " " + p[2] + " " + p[5] + " " + p[6] + ";"
 
 
@@ -198,6 +198,8 @@ def p_run_function(p):
     '''run_function : ID ORBRACKET function_args CRBRACKET
     | ID ORBRACKET function_args CRBRACKET NEWLINE'''
     if len(p) == 6:
+        if p[1] == "print":
+            p[1] = "printf"
         p[0] = p[1] + p[2] + p[3] + p[4] + ";" + p[5]
     else:
         p[0] = p[1] + p[2] + p[3] + p[4]

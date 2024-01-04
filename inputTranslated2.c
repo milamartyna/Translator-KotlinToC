@@ -3,25 +3,30 @@ int complex_add (int a)
 {
 int c = 5;
  int d = 10;
- while ((a<=b)&&(c>d)){
+ while ((a<=15)&&(c>d)){
 c--;
  a++;
 }
  return a+d;
 }
-int main (int argCount, char[]  args)
+int run (int argCount, char*  args)
 {
 int a = 8;
  int b = 9;
  while (a<=b){
-print('Aloha');
+printf('Aloha');
  a++;
 }
  if (argCount>1){
 return 1;
 }
  else {
-return add(a);
+return complex_add(a);
 }
+}
+int main (int argCount, char*  args)
+{
+run(2, 'stringArg');
+ return 0;
 }
 

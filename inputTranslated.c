@@ -1,6 +1,6 @@
 #include <stdio.h>
-void do (int argCount, char[]  args)
+void main (int argCount)
 {
-print('Hello, World!');
+printf('Hello, World!');
 }
 
